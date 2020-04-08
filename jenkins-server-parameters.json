@@ -1,0 +1,22 @@
+[
+	{
+		"ParameterKey": "DefaultVpcId",
+		"ParameterValue": "vpc-02b84e67"
+	},
+	{
+		"ParameterKey": "DefaultSubnetId",
+		"ParameterValue": "subnet-7c03c419"
+	},
+	{
+		"ParameterKey": "JenkinsServerImageId",
+		"ParameterValue": "ami-0d1cd67c26f5fca19"
+	},
+	{
+		"ParameterKey": "JenkinsServerInstanceType",
+		"ParameterValue": "t2.micro"
+	},
+	{
+		"ParameterKey": "JenkinsServerKeyName",
+		"ParameterValue": "jump-box"
+	}
+]

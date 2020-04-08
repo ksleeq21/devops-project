@@ -1,0 +1,86 @@
+Parameters:
+
+  DefaultVpcId:
+    Description: Default VPC Id
+    Type: String
+  
+  DefaultSubnetId:
+    Description: Default Subnet Id
+    Type: String
+
+  JenkinsServerImageId:
+    Description: Image Id for Jenkins EC2 Instance
+    Type: String
+
+  JenkinsServerInstanceType:
+    Description: EC2 Instance Type for Jenkins Server
+    Type: String
+
+  JenkinsServerKeyName:
+    Description: Key name for SSH connection
+    Type: String
+
+Resources:
+  JenkinsSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      GroupDescription: "Security Group for Jenkins"
+      GroupName: jenkins-sg
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 8080
+        ToPort: 8080
+        CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+      - IpProtocol: tcp
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+      VpcId:
+        Ref: DefaultVpcId
+
+  JenkinsServer: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: 
+        Ref: JenkinsServerImageId
+      InstanceType: 
+        Ref: JenkinsServerInstanceType
+      KeyName:
+        Ref: JenkinsServerKeyName
+      NetworkInterfaces: 
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          GroupSet: 
+            - Ref: "JenkinsSecurityGroup"
+          SubnetId: 
+            Ref: DefaultSubnetId
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          apt update -y
+          apt upgrade -y 
+          apt install default-jdk -y
+          wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+          sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+          sudo apt update -y
+          sudo apt install jenkins -y
+          sudo systemctl status jenkins
+
+Outputs: 
+  JenkinsPublicDNS: 
+    Description: The public host name of Jenkins server
+    Value:
+      !GetAtt JenkinsServer.PublicDnsName
+    Export:
+      Name: JenkinsServerPublicDNS
+  JenkinsDashboardAddress: 
+    Description: The address of Jenkins dashboard
+    Value:
+        !Sub "http://${JenkinsServer.PublicDnsName}:8080"
+    Export:
+        Name: JenkinsDashboardAddress
