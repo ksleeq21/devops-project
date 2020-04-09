@@ -15,7 +15,10 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                DOCKER_IMAGE = docker.build REGISTRY + ":latest"
+                script {
+                    DOCKER_IMAGE = docker.build REGISTRY + ":latest"
+                }
+                
                 // sh "docker build . -t ksleeq21/devops-project"
                 // sh "docker image ls"
             }
