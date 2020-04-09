@@ -1,19 +1,14 @@
 pipeline {
      agent any
      stages {
-         stage('Lint HTML') {
+         stage('Lint') {
             steps {
                 sh 'tidy -q -e *.html'
+                sh 'eslint .'
+                sh 'hadolint Dockerfile'
             }
          }
-         stage('Lint JavaScript') {
-             steps {
-                 sh 'eslint .'
-             }
-         }
-         stage('Lint Dockerfile') {
-             sh 'hadolint Dockerfile'
-         }       
+           
         //  stage('Upload to AWS') {
         //       steps {
         //           withAWS(region:'us-west-2') {
