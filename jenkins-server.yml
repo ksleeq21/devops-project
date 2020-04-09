@@ -73,6 +73,12 @@ Resources:
           sudo systemctl status jenkins
           wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.17.5/hadolint-Linux-x86_64 &&\
           chmod +x /bin/hadolint
+          # Install Node.js
+          curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+          sudo apt install nodejs -y
+          node --version
+          # Install eslint
+          sudo npm install -g eslint
           
 Outputs: 
   JenkinsPublicDNS: 
