@@ -65,12 +65,16 @@ Resources:
           apt update -y
           apt upgrade -y 
           apt install default-jdk -y
+          # Install Jenkins 
           wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
           sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
           sudo apt update -y
           sudo apt install jenkins -y
           sudo apt install tidy -y
           sudo systemctl status jenkins
+          # Install docker 
+          sudo apt install docker.io -y 
+          # Install hadolint 
           wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.17.5/hadolint-Linux-x86_64 &&\
           chmod +x /bin/hadolint
           # Install Node.js
