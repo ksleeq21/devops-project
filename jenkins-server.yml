@@ -69,8 +69,11 @@ Resources:
           sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
           sudo apt update -y
           sudo apt install jenkins -y
+          sudo apt install tidy -y
           sudo systemctl status jenkins
-
+          wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.17.5/hadolint-Linux-x86_64 &&\
+          chmod +x /bin/hadolint
+          
 Outputs: 
   JenkinsPublicDNS: 
     Description: The public host name of Jenkins server
