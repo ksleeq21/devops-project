@@ -33,6 +33,7 @@ pipeline {
         stage('Remove Unused docker image') {
             steps {
                 sh "docker rmi ${IMAGE_URL}"
+                sh "docker image ls"
             }
         }
     }
