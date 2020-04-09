@@ -4,7 +4,8 @@
   "description": "DevOps Project WebApp",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/sample-test.js",
+    "lint": "eslint .  && tidy -q -e ./public/*.html && hadolint Dockerfile"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,8 @@
   },
   "devDependencies": {
     "eslint": "^6.8.0"
-  }
+  },
+  "engines" : { 
+    "node" : ">=12.16" 
+  } 
 }

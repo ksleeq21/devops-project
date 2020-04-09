@@ -9,9 +9,12 @@ pipeline {
     stages {
         stage("Lint") {
             steps {
-                sh "tidy -q -e ./public/*.html"
-                sh "eslint ."
-                sh "hadolint Dockerfile"
+                sh "npm run lint"
+            }
+        }
+        stage("Test") {
+            steps {
+                sh "npm test"
             }
         }
         stage("Build Docker Image") {
