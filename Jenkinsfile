@@ -1,7 +1,9 @@
 pipeline {
     agent any
     environment {
-        DOCKER_TAG = get_docker_tag()
+        REGISTRY = 'ksleeq21/devops-project'
+        REGISTRY_CREDENTIAL = 'dockerhub'
+        DOCKER_IMAGE = ''
     }
     stages {
         stage('Lint') {
@@ -13,11 +15,24 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh "docker build . -t ksleeq21/devops-project"
-                sh "docker image ls"
+                DOCKER_IMAGE = docker.build REGISTRY + ":latest"
+                // sh "docker build . -t ksleeq21/devops-project"
+                // sh "docker image ls"
             }
         }
-        
+        stage('Deploy image') {
+            steps {
+                script {
+                    docker.withRegistry('', REGISTRY_CREDENTIAL)
+                    DOCKER_IMAGE.push()
+                }
+            }
+        }
+        stage('Remove Unused docker image') {
+            steps {
+                sh "docker rmi $REGISTRY:latest"
+            }
+        }
         //  stage('Upload to AWS') {
         //       steps {
         //           withAWS(region:'us-west-2') {

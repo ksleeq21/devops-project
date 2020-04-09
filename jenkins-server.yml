@@ -74,6 +74,9 @@ Resources:
           sudo systemctl status jenkins
           # Install docker 
           sudo apt install docker.io -y 
+          # Add jenkins to the group docker 
+          sudo usermod -a -G docker jenkins
+          sudo systemctl restart jenkins
           # Install hadolint 
           wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.17.5/hadolint-Linux-x86_64 &&\
           chmod +x /bin/hadolint
