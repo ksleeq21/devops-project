@@ -16,9 +16,6 @@ pipeline {
             steps {
                 sh "docker build . -t ${REGISTRY}"
                 sh "docker image ls"
-                // script {
-                //     DOCKER_IMAGE = docker.build REGISTRY + ":latest"
-                // }
             }
         }
         stage('Deploy Docker Image') {
@@ -26,10 +23,6 @@ pipeline {
                 withDockerRegistry([credentialsId: REGISTRY_CREDENTIAL_ID, url: ""]) {
                     sh "docker push ${REGISTRY}"
                 }
-                // script {
-                //     docker.withRegistry('', REGISTRY_CREDENTIAL_ID)
-                //     DOCKER_IMAGE.push()
-                // }
             }
         }
         stage('Remove Unused docker image') {
@@ -37,7 +30,7 @@ pipeline {
                 sh "docker rmi $REGISTRY"
             }
         }
-     }
+    }
 }
 
 // def get_docker_tag() {
