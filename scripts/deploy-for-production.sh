@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ "$#" -ne 4 ]; then
-  echo "Number of input arguments: ${$#}"
-  echo "Usage: ./scripts/deploy-for-production.sh SERVICE_NAME DEPLOYMENT_NAME VERSION DEPLOYMENT_FILE" >&2
-  exit 1
-fi
+# if [ "$#" -ne 4 ]; then
+#   echo "Number of input arguments: ${$#}"
+#   echo "Usage: ./scripts/deploy-for-production.sh SERVICE_NAME DEPLOYMENT_NAME VERSION DEPLOYMENT_FILE" >&2
+#   exit 1
+# fi
 
 SERVICE_NAME=$1
 DEPLOYMENT_NAME=$2
