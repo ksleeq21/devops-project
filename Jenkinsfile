@@ -7,8 +7,7 @@ pipeline {
         SERVICE_NAME = "svc-${NAME}"
         DEPLOYMENT_NAME = "dp-{NAME}-${VERSION}"
         REGISTRY = "ksleeq21/devops-project"
-        DOCKER_TAG = VERSION
-        IMAGE_URL = "${REGISTRY}:${DOCKER_TAG}"
+        IMAGE_URL = "${REGISTRY}:${VERSION}"
         REGISTRY_CREDENTIAL_ID = 'dockerhub'
     }
     stages {
@@ -40,7 +39,7 @@ pipeline {
                 branch "master"  
             }
             steps {
-                sh "./scripts/deploy-for-production.sh ${NAMESPACE} ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${DOCKER_TAG}"
+                sh "./scripts/deploy-for-production.sh ${NAMESPACE} ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${VERSION}"
                 // sh "docker stop $(docker ps -a -q)"
                 // sh "docker rm $(docker ps -a -q)"
                 // sh "docker rmi $(docker images -a -q)"
