@@ -19,7 +19,7 @@ echo "DEPLOYMENT_FILE : ${DEPLOYMENT_FILE}"
 
 DUP_DEPLOYMENT=$(kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}")
 echo "DUP_DEPLOYMENT: [${DUP_DEPLOYMENT}]"
-
+echo "Length: $(echo -n $DUP_DEPLOYMENT | wc -m)"
 # Check deployment
 # if kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}"; then
 if (echo -n $DUP_DEPLOYMENT | wc -m) > 0; then
