@@ -48,7 +48,8 @@ pipeline {
             //     branch "production"  
             // }
             steps {
-                sh './scripts/deploy-for-production.sh ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${VERSION} ${DEPLOYMENT_FILE}'
+                // sh './scripts/deploy-for-production.sh ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${VERSION} ${DEPLOYMENT_FILE}'
+                sh 'kubectl apply -f ./config/deployment-test.yaml'
             }
         }
     }
