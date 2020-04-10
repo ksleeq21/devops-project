@@ -52,7 +52,7 @@ pipeline {
                 // sh "docker rm $(docker ps -a -q)"
                 // sh "docker rmi $(docker images -a -q)"
                 sh "docker rmi ${IMAGE_URL}"
-                sh "docker rmi $(docker images |grep 'node:12.16.1-alpine3.9')"
+                // sh "docker rmi $(docker images |grep 'node:12.16.1-alpine3.9')"
                 sh "docker image ls"
             }
         }
