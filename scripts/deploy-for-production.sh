@@ -17,6 +17,7 @@ echo "DEPLOYMENT_NAME : ${DEPLOYMENT_NAME}"
 echo "VERSION         : ${VERSION}"
 echo "DEPLOYMENT_FILE : ${DEPLOYMENT_FILE}"
 
+
 # Check deployment
 DUP_FOUND=$(echo -n $(kubectl get deploy dp-devops-project-1.0.2) | wc -m)
 
@@ -25,17 +26,18 @@ if [ $DUP_FOUND -ne 0 ]; then
     exit 1
 fi
 
+
 # Create green deployment
 sed -i -e "s/DEPLOYMENT_NAME/${DEPLOYMENT_NAME}/g" $DEPLOYMENT_FILE 
 sed -i -e "s/VERSION/${VERSION}/g" $DEPLOYMENT_FILE
 
+echo "+++ Green Deployment, filename: ${DEPLOYMENT_FILE} +++"
 cat $DEPLOYMENT_FILE
 
-echo "Test Done"
-exit 0
 
-
+# Green deployment
 kubectl apply -f $DEPLOYMENT_FILE
+
 
 # Check green deployment readiness
 READY=$(kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}" -o json | jq '.status.conditions[] | select(.reason == "MinimumReplicasAvailable") | .status' | tr -d '"')
@@ -44,7 +46,9 @@ while [[ "$READY" != "True" ]]; do
     sleep 5
 done
 
+
 # Update the service selector with the new version
 kubectl patch svc $SERVICE -p "{\"spec\":{\"selector\": {\"name\": \"${DEPLOYMENT_NAME}\", \"version\": \"${VERSION}\"}}}"
+
 
 echo "Deployment done!"
