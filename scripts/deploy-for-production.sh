@@ -35,6 +35,11 @@ echo "+++ Green Deployment, filename: ${DEPLOYMENT_FILE} +++"
 cat $DEPLOYMENT_FILE
 
 
+whoami
+echo "Test Done"
+exit 0
+
+
 # Green deployment
 kubectl apply -f $DEPLOYMENT_FILE
 echo "kubectl apply -f ${DEPLOYMENT_FILE} executed"
