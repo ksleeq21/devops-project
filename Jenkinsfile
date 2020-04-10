@@ -21,6 +21,16 @@ pipeline {
                 sh "npm test"
             }
         }
+
+        stage("Test Deploy Script") {
+            when {
+                branch "master"  
+            }
+            steps {
+                sh "./scripts/deploy-for-production.sh ${NAMESPACE} ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${VERSION}"
+            }
+        }
+
         stage("Build Docker Image") {
             steps {
                 sh "docker build . -t ${IMAGE_URL}"
