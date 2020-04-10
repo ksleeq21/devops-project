@@ -20,7 +20,7 @@ echo "DEPLOYMENT_FILE : ${DEPLOYMENT_FILE}"
 DUP_FOUND=$(echo -n $(kubectl get deploy dp-devops-project-1.0.2) | wc -m)
 echo "DUP_FOUND: ${DUP_FOUND}"
 # Check deployment
-if [$DUP_FOUND -eq 0]; then
+if [ $DUP_FOUND -ne 0 ]; then
     echo "Deployment ${DEPLOYMENT_NAME}-${VERSION} is already provisioned!"
     exit 1
 fi
