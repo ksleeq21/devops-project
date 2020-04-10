@@ -97,6 +97,8 @@ Resources:
           sudo mv /tmp/eksctl /usr/local/bin
           # Install kubectl 
           sudo snap install kubectl
+          # Install jq
+          sudo apt install jq -y
 
           
 Outputs: 

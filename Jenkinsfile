@@ -1,11 +1,13 @@
 pipeline {
     agent any
     environment {
-        NAMESPACE = "webapp-ns"
-        SERVICE_NAME = "webapp-svc"
-        DEPLOYMENT_NAME = "webapp-dp"
+        NAME = get_name()
+        VERSION = get_version()
+        NAMESPACE = "ns-${NAME}"
+        SERVICE_NAME = "svc-${NAME}"
+        DEPLOYMENT_NAME = "dp-{NAME}-${VERSION}"
         REGISTRY = "ksleeq21/devops-project"
-        DOCKER_TAG = get_docker_tag()
+        DOCKER_TAG = VERSION
         IMAGE_URL = "${REGISTRY}:${DOCKER_TAG}"
         REGISTRY_CREDENTIAL_ID = 'dockerhub'
     }
@@ -59,7 +61,13 @@ pipeline {
     }
 }
 
-def get_docker_tag() {
-    def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
-    return tag
+def get_version() {
+    // def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
+    def version = sh script: "jq -r .version package.json", returnStdout: true
+    return version
+}
+
+def get_name() {
+    def name = sh script: "jq -r .name package.json", returnStdout: true
+    return name
 }
