@@ -1,18 +1,18 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: dp-devops-project-1.0.1
+  name: DEPLOYMENT_NAME-VERSION
 spec:
   replicas: 3
   template:
     metadata:
       labels:
-        name: dp-devops-project
-        version: "1.0.1"
+        name: DEPLOYMENT_NAME
+        version: "VERSION"
     spec:
       containers: 
-        - name: dp-devops-project
-          image: ksleeq21/devops-project:1.0.1
+        - name: DEPLOYMENT_NAME
+          image: ksleeq21/DEPLOYMENT_NAME:VERSION
           ports:
             - name: http
               containerPort: 8000
