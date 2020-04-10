@@ -35,14 +35,15 @@ echo "+++ Green Deployment, filename: ${DEPLOYMENT_FILE} +++"
 cat $DEPLOYMENT_FILE
 
 
+# Green deployment
+kubectl apply -f $DEPLOYMENT_FILE
+echo "kubectl apply -f ${DEPLOYMENT_FILE} executed"
+
+
 whoami
 echo "Test Done"
 exit 0
 
-
-# Green deployment
-kubectl apply -f $DEPLOYMENT_FILE
-echo "kubectl apply -f ${DEPLOYMENT_FILE} executed"
 
 # Check green deployment readiness
 READY=$(kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}" -o json | jq '.status.conditions[] | select(.reason == "MinimumReplicasAvailable") | .status' | tr -d '"')
