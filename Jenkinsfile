@@ -27,7 +27,7 @@ pipeline {
                 branch "master"  
             }
             steps {
-                sh "./scripts/deploy-for-production.sh '${NAMESPACE},${SERVICE_NAME},${DEPLOYMENT_NAME},${VERSION}'"
+                sh "./scripts/deploy-for-production.sh '${NAMESPACE} ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${VERSION}'"
             }
         }
 
@@ -49,7 +49,7 @@ pipeline {
                 branch "master"  
             }
             steps {
-                sh "./scripts/deploy-for-production.sh ${NAMESPACE} ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${VERSION}"
+                sh "./scripts/deploy-for-production.sh '${NAMESPACE} ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${VERSION}'"
             }
         }
         stage("Remove Unused docker image") {
