@@ -12,7 +12,7 @@ echo "VERSION         : ${VERSION}"
 echo "DEPLOYMENT_FILE : ${DEPLOYMENT_FILE}"
 
 # Check deployment
-if ! kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}"; then
+if kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}"; then
     echo "Deployment ${DEPLOYMENT_NAME}-${VERSION} is already provisioned!"
     exit 1
 fi
