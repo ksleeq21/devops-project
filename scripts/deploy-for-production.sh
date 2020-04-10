@@ -17,12 +17,10 @@ echo "DEPLOYMENT_NAME : ${DEPLOYMENT_NAME}"
 echo "VERSION         : ${VERSION}"
 echo "DEPLOYMENT_FILE : ${DEPLOYMENT_FILE}"
 
-DUP_DEPLOYMENT=$(kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}")
-echo "DUP_DEPLOYMENT: [${DUP_DEPLOYMENT}]"
-echo "Length: $(echo -n $DUP_DEPLOYMENT | wc -m)"
+DUP_FOUND=$(echo -n $(kubectl get deploy dp-devops-project-1.0.2) | wc -m)
+echo "DUP_FOUND: ${DUP_FOUND}"
 # Check deployment
-# if kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}"; then
-if [(echo -n $DUP_DEPLOYMENT | wc -m) -ne 0]; then
+if [$DUP_FOUND -ne 0]; then
     echo "Deployment ${DEPLOYMENT_NAME}-${VERSION} is already provisioned!"
     exit 1
 fi
