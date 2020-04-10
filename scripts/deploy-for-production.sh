@@ -17,6 +17,9 @@ if kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}"; then
     exit 1
 fi
 
+echo "Test done"
+exit 0
+
 # Create green deployment
 sed -i -e "s/NAME/${DEPLOYMENT_NAME}/g" $DEPLOYMENT_FILE 
 sed -i -e "s/VERSION/${VERSION}/g" $DEPLOYMENT_FILE
