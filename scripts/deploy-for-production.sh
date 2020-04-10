@@ -37,7 +37,7 @@ cat $DEPLOYMENT_FILE
 
 # Green deployment
 kubectl apply -f $DEPLOYMENT_FILE
-
+echo "kubectl apply -f ${DEPLOYMENT_FILE} executed"
 
 # Check green deployment readiness
 READY=$(kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}" -o json | jq '.status.conditions[] | select(.reason == "MinimumReplicasAvailable") | .status' | tr -d '"')
@@ -45,10 +45,12 @@ while [[ "$READY" != "True" ]]; do
     READY=$(kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}" -o json | jq '.status.conditions[] | select(.reason == "MinimumReplicasAvailable") | .status' | tr -d '"')
     sleep 5
 done
+echo "Green deployment is ready"
 
 
 # Update the service selector with the new version
 kubectl patch svc $SERVICE -p "{\"spec\":{\"selector\": {\"name\": \"${DEPLOYMENT_NAME}\", \"version\": \"${VERSION}\"}}}"
+echo "kubectl patch svc executed"
 
 
 echo "Deployment done!"
