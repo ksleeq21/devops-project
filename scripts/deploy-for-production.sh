@@ -22,7 +22,7 @@ echo "DUP_DEPLOYMENT: ${DUP_DEPLOYMENT}"
 
 # Check deployment
 # if kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}"; then
-if DUP_DEPLOYMENT; then
+if $DUP_DEPLOYMENT; then
     echo "Deployment ${DEPLOYMENT_NAME}-${VERSION} is already provisioned!"
     exit 1
 fi
