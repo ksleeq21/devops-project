@@ -36,6 +36,7 @@ cat $DEPLOYMENT_FILE
 
 
 # Green deployment
+echo "sudo su ubuntu -"
 sudo su ubuntu -
 whoami
 kubectl apply -f $DEPLOYMENT_FILE
