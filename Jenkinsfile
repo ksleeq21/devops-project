@@ -33,27 +33,27 @@ pipeline {
                 }
             }
         }
-        stage("Remove Unused docker image") {
-            steps {
-                sh "docker stop $(docker ps -a -q)"
-                sh "docker rm $(docker ps -a -q)"
-                sh "docker rmi $(docker images -a -q)"
-                // sh "docker rmi ${IMAGE_URL}"
-                // sh "docker rmi $(docker images |grep 'node:12.16.1-alpine3.9')"
-                // sh "docker image ls"
-            }
-        }
         stage("Deploy for production") {
             when {
-                branch "production"  
+                branch "master"  
             }
             steps {
                 sh "./scripts/deploy-for-production.sh ${NAMESPACE} ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${DOCKER_TAG}"
-                sh "docker stop $(docker ps -a -q)"
-                sh "docker rm $(docker ps -a -q)"
-                sh "docker rmi $(docker images -a -q)"
+                // sh "docker stop $(docker ps -a -q)"
+                // sh "docker rm $(docker ps -a -q)"
+                // sh "docker rmi $(docker images -a -q)"
                 // sh "docker rmi ${IMAGE_URL}"
                 // sh "docker image ls"
+            }
+        }
+        stage("Remove Unused docker image") {
+            steps {
+                // sh "docker stop $(docker ps -a -q)"
+                // sh "docker rm $(docker ps -a -q)"
+                // sh "docker rmi $(docker images -a -q)"
+                sh "docker rmi ${IMAGE_URL}"
+                sh "docker rmi $(docker images |grep 'node:12.16.1-alpine3.9')"
+                sh "docker image ls"
             }
         }
     }
