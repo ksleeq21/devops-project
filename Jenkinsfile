@@ -42,13 +42,6 @@ pipeline {
             }
             steps {
                 sh "./scripts/deploy-for-production.sh"
-            }
-        }
-        stage("Remove Unused docker image") {
-            when {
-                branch "production"  
-            }
-            steps {
                 sh "docker rmi ${IMAGE_URL}"
                 sh "docker image ls"
             }
