@@ -36,10 +36,8 @@ cat $DEPLOYMENT_FILE
 
 
 # Green deployment
-echo "sudo su ubuntu -"
-sudo su ubuntu -
-whoami
-kubectl apply -f $DEPLOYMENT_FILE
+sudo -H -u ubuntu bash -c "kubectl apply -f ${DEPLOYMENT_FILE}"
+# kubectl apply -f $DEPLOYMENT_FILE
 echo "kubectl apply -f ${DEPLOYMENT_FILE} executed"
 
 
