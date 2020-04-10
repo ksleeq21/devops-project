@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        REGISTRY = 'ksleeq21/devops-project'
-        DOCKER_TAG = get_docker_tag()
+        REGISTRY = "ksleeq21/devops-project"
+        DOCKER_TAG = "latest"//get_docker_tag()
         IMAGE_URL = "${REGISTRY}:${DOCKER_TAG}"
         REGISTRY_CREDENTIAL_ID = 'dockerhub'
     }
@@ -42,6 +42,10 @@ pipeline {
             }
             steps {
                 sh "./scripts/deploy-for-production.sh"
+            }
+            steps {
+                sh "docker rmi ${IMAGE_URL}"
+                sh "docker image ls"
             }
         }
     }
