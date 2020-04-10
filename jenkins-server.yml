@@ -59,6 +59,10 @@ Resources:
             - Ref: "JenkinsSecurityGroup"
           SubnetId: 
             Ref: DefaultSubnetId
+      Tags:
+        - 
+          Key: "Name"
+          Value: "JenkinsServer"
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
@@ -86,6 +90,14 @@ Resources:
           node --version
           # Install eslint
           sudo npm install -g eslint
+          # Install AWS CLI
+          sudo apt  install awscli -y
+          # Install eksctl
+          curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+          sudo mv /tmp/eksctl /usr/local/bin
+          # Install kubectl 
+          sudo snap install kubectl
+
           
 Outputs: 
   JenkinsPublicDNS: 

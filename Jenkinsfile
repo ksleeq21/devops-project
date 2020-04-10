@@ -23,17 +23,25 @@ pipeline {
                 sh "docker image ls"
             }
         }
-        stage('Deploy Docker Image') {
+        stage("Push Docker Image") {
             steps {
                 withDockerRegistry([credentialsId: REGISTRY_CREDENTIAL_ID, url: ""]) {
                     sh "docker push ${IMAGE_URL}"
                 }
             }
         }
-        stage('Remove Unused docker image') {
+        stage("Remove Unused docker image") {
             steps {
                 sh "docker rmi ${IMAGE_URL}"
                 sh "docker image ls"
+            }
+        }
+        stage("Deploy for production") {
+            when {
+                branch "production"  
+            }
+            steps {
+                sh "./scripts/deploy-for-production.sh"
             }
         }
     }
