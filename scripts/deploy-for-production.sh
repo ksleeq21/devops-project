@@ -26,7 +26,7 @@ if [ $DUP_FOUND -ne 0 ]; then
 fi
 
 # Create green deployment
-sed -i -e "s/NAME/${DEPLOYMENT_NAME}/g" $DEPLOYMENT_FILE 
+sed -i -e "s/DEPLOYMENT_NAME/${DEPLOYMENT_NAME}/g" $DEPLOYMENT_FILE 
 sed -i -e "s/VERSION/${VERSION}/g" $DEPLOYMENT_FILE
 
 cat $DEPLOYMENT_FILE
