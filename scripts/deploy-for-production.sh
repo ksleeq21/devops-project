@@ -22,7 +22,7 @@ echo "DUP_DEPLOYMENT: [${DUP_DEPLOYMENT}]"
 echo "Length: $(echo -n $DUP_DEPLOYMENT | wc -m)"
 # Check deployment
 # if kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}"; then
-if (echo -n $DUP_DEPLOYMENT | wc -m) > 0; then
+if [(echo -n $DUP_DEPLOYMENT | wc -m) -ne 0]; then
     echo "Deployment ${DEPLOYMENT_NAME}-${VERSION} is already provisioned!"
     exit 1
 fi
