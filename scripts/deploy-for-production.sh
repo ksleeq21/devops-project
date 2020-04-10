@@ -17,7 +17,7 @@ echo "DEPLOYMENT_NAME : ${DEPLOYMENT_NAME}"
 echo "VERSION         : ${VERSION}"
 echo "DEPLOYMENT_FILE : ${DEPLOYMENT_FILE}"
 
-DUP_DEPLOYMENT=$(kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}" >&2)
+DUP_DEPLOYMENT=$(kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}")
 echo "DUP_DEPLOYMENT: ${DUP_DEPLOYMENT}"
 
 # Check deployment
