@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment {
-        NAMESPACE = "mynamespace"
-        SERVICE_NAME = "webappservice"
-        DEPLOYMENT_NAME = "webapp"
+        NAMESPACE = "webapp-ns"
+        SERVICE_NAME = "webapp-svc"
+        DEPLOYMENT_NAME = "webapp-dp"
         REGISTRY = "ksleeq21/devops-project"
         DOCKER_TAG = get_docker_tag()
         IMAGE_URL = "${REGISTRY}:${DOCKER_TAG}"
@@ -44,7 +44,7 @@ pipeline {
                 branch "production"  
             }
             steps {
-                sh "./scripts/deploy-for-production.sh ${NAMESPACE} ${SERVICE_NAME} ${REGISTRY} ${DOCKER_TAG}"
+                sh "./scripts/deploy-for-production.sh ${NAMESPACE} ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${DOCKER_TAG}"
                 sh "docker rmi ${IMAGE_URL}"
                 sh "docker image ls"
             }
