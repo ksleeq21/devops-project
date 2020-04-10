@@ -18,11 +18,11 @@ echo "VERSION         : ${VERSION}"
 echo "DEPLOYMENT_FILE : ${DEPLOYMENT_FILE}"
 
 DUP_DEPLOYMENT=$(kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}")
-echo "DUP_DEPLOYMENT: ${DUP_DEPLOYMENT}"
+echo "DUP_DEPLOYMENT: [${DUP_DEPLOYMENT}]"
 
 # Check deployment
 # if kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}"; then
-if $DUP_DEPLOYMENT; then
+if $(echo -n $DUP_DEPLOYMENT | wc -m) > 0; then
     echo "Deployment ${DEPLOYMENT_NAME}-${VERSION} is already provisioned!"
     exit 1
 fi
