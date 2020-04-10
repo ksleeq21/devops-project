@@ -17,20 +17,23 @@ echo "DEPLOYMENT_NAME : ${DEPLOYMENT_NAME}"
 echo "VERSION         : ${VERSION}"
 echo "DEPLOYMENT_FILE : ${DEPLOYMENT_FILE}"
 
-DUP_FOUND=$(echo -n $(kubectl get deploy dp-devops-project-1.0.2) | wc -m)
-echo "DUP_FOUND: ${DUP_FOUND}"
 # Check deployment
+DUP_FOUND=$(echo -n $(kubectl get deploy dp-devops-project-1.0.2) | wc -m)
+
 if [ $DUP_FOUND -ne 0 ]; then
     echo "Deployment ${DEPLOYMENT_NAME}-${VERSION} is already provisioned!"
     exit 1
 fi
 
-echo "Test done"
-exit 0
-
 # Create green deployment
 sed -i -e "s/NAME/${DEPLOYMENT_NAME}/g" $DEPLOYMENT_FILE 
 sed -i -e "s/VERSION/${VERSION}/g" $DEPLOYMENT_FILE
+
+cat $DEPLOYMENT_FILE
+
+echo "Test Done"
+exit 0
+
 
 kubectl apply -f $DEPLOYMENT_FILE
 
