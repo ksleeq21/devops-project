@@ -21,16 +21,6 @@ pipeline {
                 sh "npm test"
             }
         }
-
-        stage("Test Deploy Script") {
-            when {
-                branch "master"  
-            }
-            steps {
-                sh "./scripts/deploy-for-production.sh '${NAMESPACE} ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${VERSION}'"
-            }
-        }
-
         stage("Build Docker Image") {
             steps {
                 sh "docker build . -t ${IMAGE_URL}"
@@ -62,7 +52,6 @@ pipeline {
 }
 
 def get_version() {
-    // def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
     def version = sh script: "jq -r .version package.json", returnStdout: true
     return version
 }
