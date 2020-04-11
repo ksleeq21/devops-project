@@ -55,11 +55,11 @@ pipeline {
                     sh "scp -o StrictHostKeyChecking=no ./config/service.yaml ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com:~/"
                     script {
                         try {
-                            sh "ssh -o StrictHostKeyChecking=no ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com kubectl apply -f deployment-101.yaml"
-                            sh "ssh -o StrictHostKeyChecking=no ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com kubectl apply -f service.yaml"
+                            sh "ssh -i ~/jump-bo.pem ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com kubectl apply -f deployment-101.yaml"
+                            sh "ssh -i ~/jump-bo.pem ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com kubectl apply -f service.yaml"
                         } catch (error) {
-                            sh "ssh -o StrictHostKeyChecking=no ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com kubectl apply -f deployment-101.yaml"
-                            sh "ssh -o StrictHostKeyChecking=no ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com kubectl apply -f service.yaml"
+                            sh "ssh -i ~/jump-bo.pem ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com kubectl apply -f deployment-101.yaml"
+                            sh "ssh -i ~/jump-bo.pem ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com kubectl apply -f service.yaml"
                         }
                     }
                 }
