@@ -12,7 +12,7 @@ spec:
     spec:
       containers: 
         - name: dp-devops-project
-          image: ksleeq21/dp-devops-project:1.0.2
+          image: ksleeq21/devops-project:1.0.2
           ports:
             - name: http
               containerPort: 8000
