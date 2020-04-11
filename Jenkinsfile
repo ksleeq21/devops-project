@@ -50,15 +50,11 @@ pipeline {
                 branch "production"  
             }
             steps {
-                // sh './scripts/update-version.sh ${DEPLOYMENT_NAME} ./config/${DEPLOYMENT_FILE} ${VERSION}'
                 sshagent(['kops-server']) {
-
                     sh "scp -o StrictHostKeyChecking=no ./config/${DEPLOYMENT_FILE} ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com:~/"
                     sh "scp -o StrictHostKeyChecking=no ./config/${SERVICE_FILE} ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com:~/"
                     sh "scp -o StrictHostKeyChecking=no ./scripts/${DEPLOY_SCRIPT_FILENAME} ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com:~/"
                     sh 'ssh ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com sh ./${DEPLOY_SCRIPT_FILENAME} ${DEPLOYMENT_NAME} ${DEPLOYMENT_FILE} ${VERSION} ${SERVICE_NAME} ${SERVICE_FILE}'
-                    // sh "ssh ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com kubectl apply -f ${DEPLOYMENT_FILE}"
-                    // sh "ssh ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com kubectl apply -f ${SERVICE_FILE}"
                 }
             }
         }
