@@ -90,7 +90,7 @@ kubectl get deployments --sort-by=.metadata.name -o json | jq '.items[].metadata
     echo "[idx=${idx}]"
     echo "[DEPLOYMENT_NAME=${DEPLOYMENT_NAME}]"
     echo "[VERSION=${VERSION}]"
-    if [ $idx == "0" ] && [ $line != "${DEPLOYMENT_NAME}-${VERSION}" ]; then
+    if [ $idx = "0" ] && [ $line != "${DEPLOYMENT_NAME}-${VERSION}" ]; then
         kubectl delete deploy line
         echo "Deployment ${line} deleted"
     fi
