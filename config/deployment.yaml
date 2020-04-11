@@ -12,7 +12,7 @@ spec:
     spec:
       containers: 
         - name: DEPLOYMENT_NAME
-          image: ksleeq21/DEPLOYMENT_NAME:VERSION
+          image: ksleeq21/devops-project:VERSION
           ports:
             - name: http
               containerPort: 8000
