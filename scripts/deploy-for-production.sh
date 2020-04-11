@@ -36,7 +36,7 @@ echo "kubectl apply -f ${DEPLOYMENT_FILE} is done"
 
 # Check green deployment readiness
 READY=$(kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}" -o json | jq '.status.conditions[] | select(.reason == "MinimumReplicasAvailable") | .status' | tr -d '"')
-while [[ "$READY" != "True" ]]; do
+while [ "$READY" != "True" ]; do
     echo "Deploying ${DEPLOYMENT_NAME}-${VERSION}"
     READY=$(kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}" -o json | jq '.status.conditions[] | select(.reason == "MinimumReplicasAvailable") | .status' | tr -d '"')
     sleep 5

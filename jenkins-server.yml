@@ -95,6 +95,7 @@ Resources:
           apt upgrade -y
           apt install python3 -y
           apt install python3-pip -y
+          apt install jq -y
           # Install AWS CLI
           pip3 install awscli --upgrade
           apt install awscli -y
