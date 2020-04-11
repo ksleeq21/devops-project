@@ -51,7 +51,7 @@ pipeline {
                 // sh './scripts/deploy-for-production.sh ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${VERSION} ${DEPLOYMENT_FILE}'
                 // sh 'kubectl apply -f ./config/deployment-test.yaml'
                 sshagent(['kops-server']) {
-                    sh "scp -o StrictHostKeyChecking=no ./config/development-101.yaml ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com:~/"
+                    sh "scp -o StrictHostKeyChecking=no ./config/deployment-101.yaml  ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com:~/"
                     sh "scp -o StrictHostKeyChecking=no ./config/service.yaml ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com:~/"
                     script {
                         try {
