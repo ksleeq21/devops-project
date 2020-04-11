@@ -86,7 +86,7 @@ echo "${url} connected"
 # Delete Blue Deployment
 kubectl get deployments --sort-by=.metadata.name -o json | jq '.items[].metadata.name' | tr -d '"' | while read line ; do
     idx=$(echo $line | grep -b -o ${DEPLOYMENT_NAME} | awk 'BEGIN {FS=":"}{print $1}')
-    if { [ $idx == "0" ] && [ $line != "${DEPLOYMENT_NAME}-${VERSION}" ] ;}; then
+    if [ $idx == "0" ] && [ $line != "${DEPLOYMENT_NAME}-${VERSION}" ]; then
         kubectl delete deploy line
         echo "Deployment ${line} deleted"
     fi
