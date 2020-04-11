@@ -45,10 +45,10 @@ echo "kubectl apply -f ${DEPLOYMENT_FILE} is done"
 
 
 # Check green deployment readiness
-echo "Check green deployment rediness"
+echo "Deploying ${DEPLOYMENT_NAME}-${VERSION}"
 READY=$(kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}" -o json | jq '.status.conditions[] | select(.reason == "MinimumReplicasAvailable") | .status' | tr -d '"')
 while [ "$READY" != "True" ]; do
-    echo "Deploying ${DEPLOYMENT_NAME}-${VERSION}"
+    echo "."
     READY=$(kubectl get deploy "${DEPLOYMENT_NAME}-${VERSION}" -o json | jq '.status.conditions[] | select(.reason == "MinimumReplicasAvailable") | .status' | tr -d '"')
     sleep 5
 done
@@ -87,7 +87,7 @@ echo "${url} connected"
 kubectl get deployments --sort-by=.metadata.name -o json | jq '.items[].metadata.name' | tr -d '"' | while read line ; do
     idx=$(echo $line | grep -b -o ${DEPLOYMENT_NAME} | awk 'BEGIN {FS=":"}{print $1}')
     if [ $idx = "0" ] && [ $line != "${DEPLOYMENT_NAME}-${VERSION}" ]; then
-        kubectl delete deploy line
+        kubectl delete deploy $line
         echo "Deployment ${line} deleted"
     fi
 done
