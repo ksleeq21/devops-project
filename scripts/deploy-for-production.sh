@@ -59,7 +59,7 @@ kubectl get deploy
 # Check service
 DUP_FOUND=$(echo -n $(kubectl get svc ${SERVICE_NAME}) | wc -m)
 if [ $DUP_FOUND -eq 0 ]; then
-    echo "Service ${SERVICE_NAME} is not found, create a service!"
+    echo "Service ${SERVICE_NAME} not found, create a service!"
     kubectl apply -f $SERVICE_FILE
     echo "kubectl apply -f ${SERVICE_FILE} is done"
     kubectl get svc
@@ -71,5 +71,27 @@ kubectl patch svc $SERVICE_NAME -p "{\"spec\":{\"selector\": {\"name\": \"${DEPL
 echo "Patch for ${SERVICE_NAME} is done"
 kubectl get svc
 
+
+# Health check
+while [ "$STATUS_CODE" != "200" ]; do
+    hostname=$(kubectl get service ${SERVICE_NAME} -o json | jq '.status.loadBalancer.ingress[].hostname' | tr -d '"')
+    url="http://${hostname}:8000"
+    STATUS_CODE=$(curl --write-out %{http_code} --silent --output /dev/null $url)
+    echo "Connecting to ${url}"
+    sleep 5
+done
+echo "${url} connected"
+
+
+# Delete Blue Deployment
+kubectl get deployments --sort-by=.metadata.name -o json | jq '.items[].metadata.name' | tr -d '"' | while read line ; do
+    line="${line:1}"
+    line=${line::-1}
+    idx=$(echo $line | grep -b -o ${DEPLOYMENT_NAME} | awk 'BEGIN {FS=":"}{print $1}')
+    if { [ $idx == "0" ] && [ $line != "${DEPLOYMENT_NAME}-${VERSION}" ] ;}; then
+        kubectl delete deploy line
+        echo "Deployment ${line} deleted"
+    fi
+done
 
 echo "Deployment done!"
