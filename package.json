@@ -1,6 +1,6 @@
 {
   "name": "devops-project",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "DevOps Project WebApp",
   "main": "index.js",
   "scripts": {
