@@ -1,112 +1,114 @@
-DefaultVpcId:
-  Description: Default VPC Id
-  Type: String
+Parameters:
+  DefaultVpcId:
+    Description: Default VPC Id
+    Type: String
 
-DefaultSubnetId:
-  Description: Default Subnet Id
-  Type: String
+  DefaultSubnetId:
+    Description: Default Subnet Id
+    Type: String
 
-JenkinsServerImageId:
-  Description: Image Id for Jenkins EC2 Instance
-  Type: String
+  JenkinsServerImageId:
+    Description: Image Id for Jenkins EC2 Instance
+    Type: String
 
-JenkinsServerInstanceType:
-  Description: EC2 Instance Type for Jenkins Server
-  Type: String
+  JenkinsServerInstanceType:
+    Description: EC2 Instance Type for Jenkins Server
+    Type: String
 
-JenkinsServerKeyName:
-  Description: Key name for SSH connection
-  Type: String
+  JenkinsServerKeyName:
+    Description: Key name for SSH connection
+    Type: String
 
 Resources:
-JenkinsSecurityGroup:
-  Type: AWS::EC2::SecurityGroup
-  Properties: 
-    GroupDescription: "Security Group for Jenkins"
-    GroupName: jenkins-sg
-    SecurityGroupIngress:
-    - IpProtocol: tcp
-      FromPort: 22
-      ToPort: 22
-      CidrIp: 0.0.0.0/0
-    - IpProtocol: tcp
-      FromPort: 8080
-      ToPort: 8080
-      CidrIp: 0.0.0.0/0
-    SecurityGroupEgress:
-    - IpProtocol: tcp
-      FromPort: 0
-      ToPort: 65535
-      CidrIp: 0.0.0.0/0
-    VpcId:
-      Ref: DefaultVpcId
+  JenkinsSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      GroupDescription: "Security Group for Jenkins"
+      GroupName: jenkins-sg
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 8080
+        ToPort: 8080
+        CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+      - IpProtocol: tcp
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+      VpcId:
+        Ref: DefaultVpcId
 
-JenkinsServer: 
-  Type: AWS::EC2::Instance
-  Properties: 
-    ImageId: 
-      Ref: JenkinsServerImageId
-    InstanceType: 
-      Ref: JenkinsServerInstanceType
-    KeyName:
-      Ref: JenkinsServerKeyName
-    NetworkInterfaces: 
-      - AssociatePublicIpAddress: "true"
-        DeviceIndex: "0"
-        GroupSet: 
-          - Ref: "JenkinsSecurityGroup"
-        SubnetId: 
-          Ref: DefaultSubnetId
-    UserData:
-      Fn::Base64: !Sub |
-        #!/bin/bash
-        apt update -y
-        apt upgrade -y 
-        apt install default-jdk -y
-        # Install hadolint 
-        wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.17.5/hadolint-Linux-x86_64 &&\
-        chmod +x /bin/hadolint
-        # Install Node.js
-        curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-        apt install nodejs -y
-        node --version
-        # Install eslint
-        npm install -g eslint
-        # Install jq
-        apt install jq -y
-        # Install Python3
-        apt install python3 -y
-        apt install pip3 -y
-        # Install AWS CLI
-        pip3 install awscli --upgrade
-        # Install kubectl 
-        snap install kubectl
-        # Install Jenkins 
-        # wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | apt-key add -
-        # sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-        # apt update -y
-        # apt install jenkins -y
-        # apt install tidy -y
-        # systemctl status jenkins
-        # Install docker 
-        # apt install docker.io -y 
-        # Add jenkins to the group docker 
-        # usermod -a -G docker jenkins
-        # systemctl restart jenkins
-        # Install eksctl
-        # curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-        # mv /tmp/eksctl /usr/local/bin
+  JenkinsServer: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: 
+        Ref: JenkinsServerImageId
+      InstanceType: 
+        Ref: JenkinsServerInstanceType
+      KeyName:
+        Ref: JenkinsServerKeyName
+      NetworkInterfaces: 
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          GroupSet: 
+            - Ref: "JenkinsSecurityGroup"
+          SubnetId: 
+            Ref: DefaultSubnetId
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          apt update -y
+          apt upgrade -y 
+          apt install default-jdk -y
+          # Install hadolint 
+          wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.17.5/hadolint-Linux-x86_64 && sudo chmod +x /bin/hadolint
+          # Install Node.js
+          curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+          apt install nodejs -y
+          node --version
+          # Install eslint
+          npm install -g eslint
+          # Install jq
+          apt install jq -y
+          # Install Python3
+          apt install python3 -y
+          apt install python3-pip -y
+          # Install AWS CLI
+          pip3 install awscli --upgrade
+          # Install kubectl 
+          snap install kubectl --classic
+          kubectl version --client
+          
+          # Install Jenkins 
+          # wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | apt-key add -
+          # sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+          # apt update -y
+          # apt install jenkins -y
+          # systemctl status jenkins
+          # apt install tidy -y
+          # Install docker 
+          # apt install docker.io -y 
+          # Add jenkins to the group docker 
+          # usermod -a -G docker jenkins
+          # systemctl restart jenkins
+          # Install eksctl
+          # curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+          # mv /tmp/eksctl /usr/local/bin
 
 Outputs: 
-JenkinsPublicDNS: 
-  Description: The public host name of Jenkins server
-  Value:
-    !GetAtt JenkinsServer.PublicDnsName
-  Export:
-    Name: JenkinsServerPublicDNS
-JenkinsDashboardAddress: 
-  Description: The address of Jenkins dashboard
-  Value:
-      !Sub "http://${JenkinsServer.PublicDnsName}:8080"
-  Export:
-      Name: JenkinsDashboardAddress
+  JenkinsPublicDNS: 
+    Description: The public host name of Jenkins server
+    Value:
+      !GetAtt JenkinsServer.PublicDnsName
+    Export:
+      Name: JenkinsServerPublicDNS
+  JenkinsDashboardAddress: 
+    Description: The address of Jenkins dashboard
+    Value:
+        !Sub "http://${JenkinsServer.PublicDnsName}:8080"
+    Export:
+        Name: JenkinsDashboardAddress

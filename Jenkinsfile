@@ -11,47 +11,47 @@ pipeline {
         REGISTRY_CREDENTIAL_ID = "dockerhub"
     }
     stages {
-        // stage("Lint") {
-        //     steps {
-        //         sh "npm run lint"
-        //     }
-        // }
-        // stage("Test") {
-        //     steps {
-        //         sh "npm test"
-        //     }
-        // }
-        // stage("Build Docker Image") {
-        //     steps {
-        //         sh "docker build . -t ${IMAGE_URL}"
-        //         sh "docker image ls"
-        //     }
-        // }
-        // stage("Push Docker Image") {
-        //     steps {
-        //         withDockerRegistry([credentialsId: REGISTRY_CREDENTIAL_ID, url: ""]) {
-        //             sh "docker push ${IMAGE_URL}"
-        //         }
-        //     }
-        // }
-        // stage("Remove Unused docker image") {
-        //     when {
-        //         branch "production"  
-        //     }
-        //     steps {
-        //         sh "docker rmi ${IMAGE_URL}"
-        //         sh "docker image ls"
-        //     }
-        // }
-        stage("[Production] Deploy for production") {
-            // when {
-            //     branch "production"  
-            // }
+        stage("Lint") {
             steps {
-                // sh './scripts/deploy-for-production.sh ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${VERSION} ${DEPLOYMENT_FILE}'
-                sh 'kubectl apply -f ./config/deployment-test.yaml'
+                sh "npm run lint"
             }
         }
+        stage("Test") {
+            steps {
+                sh "npm test"
+            }
+        }
+        stage("Build Docker Image") {
+            steps {
+                sh "docker build . -t ${IMAGE_URL}"
+                sh "docker image ls"
+            }
+        }
+        stage("Push Docker Image") {
+            steps {
+                withDockerRegistry([credentialsId: REGISTRY_CREDENTIAL_ID, url: ""]) {
+                    sh "docker push ${IMAGE_URL}"
+                }
+            }
+        }
+        stage("Remove Unused docker image") {
+            when {
+                branch "production"  
+            }
+            steps {
+                sh "docker rmi ${IMAGE_URL}"
+                sh "docker image ls"
+            }
+        }
+        // stage("[Production] Deploy for production") {
+        //     // when {
+        //     //     branch "production"  
+        //     // }
+        //     steps {
+        //         // sh './scripts/deploy-for-production.sh ${SERVICE_NAME} ${DEPLOYMENT_NAME} ${VERSION} ${DEPLOYMENT_FILE}'
+        //         sh 'kubectl apply -f ./config/deployment-test.yaml'
+        //     }
+        // }
     }
 }
 
