@@ -49,7 +49,7 @@ pipeline {
             //     branch "production"  
             // }
             steps {
-                sh './scripts/update-version.sh ${DEPLOYMENT_NAME} ${DEPLOYMENT_FILE} ${VERSION}'
+                sh './scripts/update-version.sh ./config/${DEPLOYMENT_NAME} ${DEPLOYMENT_FILE} ${VERSION}'
                 sshagent(['kops-server']) {
                     sh "scp -o StrictHostKeyChecking=no ./config/${DEPLOYMENT_FILE} ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com:~/"
                     sh "scp -o StrictHostKeyChecking=no ./config/${DEPLOYMENT_FILE} ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com:~/"
