@@ -54,7 +54,7 @@ pipeline {
                     sh "scp -o StrictHostKeyChecking=no ./config/${DEPLOYMENT_FILE} ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com:~/"
                     sh "scp -o StrictHostKeyChecking=no ./config/${DEPLOYMENT_FILE} ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com:~/"
                     sh "ssh ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com kubectl apply -f ${DEPLOYMENT_FILE}"
-                    sh "ssh ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com kubectl apply -f ${SERVICE_NAME}"
+                    sh "ssh ubuntu@ec2-34-219-4-55.us-west-2.compute.amazonaws.com kubectl apply -f ${SERVICE_FILE}"
                 }
             }
         }
