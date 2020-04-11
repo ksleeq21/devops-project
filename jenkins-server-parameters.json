@@ -8,12 +8,20 @@
 		"ParameterValue": "subnet-7c03c419"
 	},
 	{
+		"ParameterKey": "KopsServerImageId",
+		"ParameterValue": "ami-0d1cd67c26f5fca19"
+	},
+	{
 		"ParameterKey": "JenkinsServerImageId",
 		"ParameterValue": "ami-0d1cd67c26f5fca19"
 	},
 	{
-		"ParameterKey": "JenkinsServerInstanceType",
+		"ParameterKey": "ServerInstanceType",
 		"ParameterValue": "t2.micro"
+	},
+	{
+		"ParameterKey": "KopsServerKeyName",
+		"ParameterValue": "jump-box"
 	},
 	{
 		"ParameterKey": "JenkinsServerKeyName",
