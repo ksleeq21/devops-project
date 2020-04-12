@@ -19,6 +19,8 @@ Jenkins configuration
 - Install packages for Jenkins operations
 - Store credentials for connecting AWS, DockerHub, and Kops server
 
+![Alt text](./scripts/jenkins-credentials.png?raw=true "Title")
+
 Kops configuration
 - Install packages for Kubernetes and EKS Cluster
 - Create a SSH key pair using `ssh-keygen -m PEM` to connect to EKS Linux Worker Nodes
