@@ -13,4 +13,4 @@ app.listen(port)
 
 const greeting = 'Hello'
 
-console.log(`Running at Port port ${port}`)
+console.log(`${greeting} Running at Port port ${port}`)
