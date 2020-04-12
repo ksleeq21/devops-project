@@ -1,8 +1,4 @@
-# devops-project
-My DevOps Project
+# DevOps Project
 
-
-### Create Network
-
-### Create Jenkins
+Capstone project for Udacity DevOps Nanodegree program.
 

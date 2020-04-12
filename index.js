@@ -11,4 +11,6 @@ router.get('/', (req, res) => {
 app.use('/', router)
 app.listen(port)
 
+const hello = 'hello'
+
 console.log(`Running at Port port ${port}`)
