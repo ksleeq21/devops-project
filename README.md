@@ -19,7 +19,10 @@ Jenkins configuration
 - Install packages for Jenkins operations
 - Store credentials for connecting AWS, DockerHub, and Kops server
 
-![Alt text](./scripts/jenkins-credentials.png?raw=true "Title")
+
+Jenkins credentials 
+
+<img src="./screenshots/jenkins-credentials.png" alt="Jenkins credentials" width="400" height="200"/>
 
 Kops configuration
 - Install packages for Kubernetes and EKS Cluster
@@ -29,7 +32,7 @@ Kops configuration
 
 ## Set up EKS cluster and nodegroup
 
-To create EKS cluster and nodegroup login to Kops server and run eksctl commands. This will create Cloudformation stacks `eksctl-devops-cluster` and `eksctl-devops-nodegroup-standard-workers`.
+To create EKS cluster and nodegroup, login to Kops server and run eksctl commands. This will create Cloudformation stacks `eksctl-devops-cluster` and `eksctl-devops-nodegroup-standard-workers`.
 
 Command for EKS Cluster
 ```
@@ -53,6 +56,10 @@ eksctl create nodegroup \
 --ssh-public-key /home/ubuntu/.ssh/id_rsa.pub \
 --managed
 ```
+
+Cloudformation stacks of EKS cluster and nodegroup
+
+<img src="./screenshots/cfn-eks-stacks.png" alt="EKS stacks" width="250" height="270"/>
 
 ---
 
