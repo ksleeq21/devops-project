@@ -8,7 +8,7 @@ This project provide a simple web page.
 
 ## Set up a Jenkins Server & a Kops Server
 
-To provision Jenkins and Kops servers run a script. This script creates a Jenkins server and Kops server that controls kubectl operations.
+Run a script `./scripts/create.sh` to provision Jenkins server and Kops server via Cloudformation. The script submits a template to Cloudformation using parameter json to create a Jenkins server and a Kops server. Jenkins server manages general pipeline operations and Kops server manages EKS Cluster and Nodegroup using `eksctl` and controls Blue-Green Deployment using `kubectl`.
 
 ```
 ./scripts/create.sh jenkins-server ./templates/jenkins-server.yaml ./templates/jenkins-server-parameters.json
@@ -17,8 +17,7 @@ To provision Jenkins and Kops servers run a script. This script creates a Jenkin
 Jenkins configuration
 - Install plugins for Jenkins operations
 - Install packages for Jenkins operations
-- Store credentials for connecting AWS, DockerHub, and Kops server
-
+- Store credentials for connecting to AWS, DockerHub, and Kops server
 
 Jenkins credentials 
 
