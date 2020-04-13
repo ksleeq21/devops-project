@@ -15,7 +15,8 @@ Run a script `./scripts/create.sh` to provision Jenkins server and Kops server v
 ```
 
 Jenkins configuration
-- Install plugins for Jenkins operations
+- Install plugins for Jenkins operations: BlueOcean, 	
+Pipeline: Step API, SSH Agent Plugin
 - Install packages for Jenkins operations
 - Store credentials for connecting to AWS, DockerHub, and Kops server
 
