@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "node test/sample-test.js",
-    "lint": "eslint .  && tidy -q -e ./public/*.html && hadolint Dockerfile"
+    "lint": "eslint .",
+    "tidy": "tidy -q -e ./public/*.html",
+    "hadolint": "hadolint Dockerfile"
   },
   "repository": {
     "type": "git",
