@@ -11,7 +11,8 @@ This project provide a simple web page.
 Run a script `./scripts/create.sh` to provision Jenkins server and Kops server via Cloudformation. The script submits a template to Cloudformation using parameter json to create a Jenkins server and a Kops server. Jenkins server manages general pipeline operations and Kops server manages EKS Cluster and Nodegroup using `eksctl` and controls Blue-Green Deployment using `kubectl`.
 
 ```
-./scripts/create.sh build-pipeline ./templates/build-pipeline.yaml ./templates/build-pipeline-parameters.json
+cd scripts
+create.sh build-pipeline templates/build-pipeline.yaml templates/build-pipeline-parameters.json
 ```
 
 Jenkins configuration
