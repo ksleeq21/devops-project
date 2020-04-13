@@ -93,20 +93,17 @@ Resources:
           #!/bin/bash
           exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
           echo "Install packages for Kops Server"
-          apt update -y
-          apt upgrade -y
-          apt install python3 -y
-          apt install python3-pip -y
-          apt install jq -y
-          # Install AWS CLI
+          yum -y update 
+          yum -y install jq 
+          yum -y install python3
+          echo "Install awscli"
           pip3 install awscli --upgrade
-          apt install awscli -y
-          # Install kubectl 
+          echo "Install kubectl"
           curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
           chmod +x ./kubectl
           mv ./kubectl /usr/local/bin/kubectl
           kubectl version --client
-          # Install eksctl
+          echo "Install eksctl"
           curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
           mv /tmp/eksctl /usr/local/bin
 
@@ -135,39 +132,41 @@ Resources:
           #!/bin/bash
           exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
           echo "Install packages for Jenkins Server"
-          apt update -y
-          # apt upgrade -y 
-          # apt install default-jdk -y
-          # # Install hadolint 
-          # wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.17.5/hadolint-Linux-x86_64 && sudo chmod +x /bin/hadolint
-          # # Install Node.js
-          # curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-          # apt install nodejs -y
-          # node --version
-          # # Install eslint
-          # npm install -g eslint
-          # # Install jq
-          # apt install jq -y
-          # # Install Python3
-          # apt install python3 -y
-          # apt install python3-pip -y
-          # # Install Jenkins 
-          # # wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | apt-key add -
-          # # sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-          # # apt update -y
-          # # apt install jenkins -y
-          # # systemctl status jenkins
-          # # apt install tidy -y
-          # # Install docker 
-          # # apt install docker.io -y 
-          # # Add jenkins to the group docker 
-          # # usermod -a -G docker jenkins
-          # # systemctl restart jenkins
+          yum -y update
+          echo "Install hadolint"
+          wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.17.5/hadolint-Linux-x86_64 && chmod +x /bin/hadolint
+          echo "Install Node.js"
+          yum install -y gcc-c++ make
+          curl -sL https://rpm.nodesource.com/setup_12.x | sudo -E bash -
+          yum install -y nodejs
+          node -v 
+          echo "Install eslint"
+          npm install -g eslint
+          echo "Install jq"
+          yum -y install jq
+          echo "Install Python3"
+          yum -y install python3
+          echo "Install Jenkins"
+          yum -y install java
+          wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+          rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+          yum -y install jenkins
+          service jenkins start
+          chkconfig jenkins on
+          echo "Install Docker"
+          yum -y install https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-selinux-17.03.0.ce-1.el7.centos.noarch.rpm
+          yum -y install https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.0-1.2.beta.2.el7.x86_64.rpm
+          yum -y install https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-17.03.0.ce-1.el7.centos.x86_64.rpm
+          systemctl start docker
+          echo "Add jenkins to docker group"
+          usermod -a -G docker jenkins
+          echo "Restart jenkins"
+          service jenkins start
           
 Outputs:
 
   KopsPublicDNS: 
-    Description: The private host name of Kops server
+    Description: The public host name of Kops server
     Value:
       !GetAtt KopsServer.PublicDnsName
     Export:
