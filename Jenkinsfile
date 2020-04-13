@@ -18,11 +18,6 @@ pipeline {
                 sh "npm run lint"
             }
         }
-        stage("Lint HTML") {
-            steps {
-                sh "npm run tidy"
-            }
-        }
         stage("Lint Dockerfile") {
             steps {
                 sh "npm run hadolint"

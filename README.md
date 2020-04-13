@@ -8,25 +8,23 @@ This project provide a simple web page.
 
 ## Set up a Jenkins Server & a Kops Server
 
-Run a script `./scripts/create.sh` to provision Jenkins server and Kops server via Cloudformation. The script submits a template to Cloudformation using parameter json to create a Jenkins server and a Kops server. Jenkins server manages general pipeline operations and Kops server manages EKS Cluster and Nodegroup using `eksctl` and controls Blue-Green Deployment using `kubectl`.
+Run a script `./scripts/create.sh` to provision Jenkins server and Kops server via Cloudformation. The script submits a template to Cloudformation with parameters to create a Jenkins server and a Kops server. During boostrap EC2 UserData scripts install necessary libraries and frameworks for Jeknins pipeline operations, Kubenetes, and EKS Cluster.
 
 ```
-cd scripts
-create.sh build-pipeline templates/build-pipeline.yaml templates/build-pipeline-parameters.json
+cd templates
+create.sh build-pipeline build-pipeline.yaml build-pipeline-parameters.json
 ```
 
-Jenkins configuration
+Post configuration for Jenkins
 - Install plugins for Jenkins operations: BlueOcean, Pipeline: Step API, SSH Agent Plugin
-- Install packages for Jenkins operations
 - Store credentials for connecting to AWS, DockerHub, and Kops server
 
-Jenkins credentials 
+Example of Jenkins credentials 
 
 <img src="./screenshots/jenkins-credentials.png" alt="Jenkins credentials" width="400" height="200"/>
 
-Kops configuration
-- Install packages for Kubernetes and EKS Cluster
-- Create a SSH key pair using `ssh-keygen -m PEM` to connect to EKS Linux Worker Nodes
+Post-configuration for Kops
+- Log into Kops EC2 instance and create a SSH key pair using `ssh-keygen -m PEM` to connect to EKS Linux Worker Nodes
 
 ---
 

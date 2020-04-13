@@ -6,7 +6,6 @@
   "scripts": {
     "test": "node test/sample-test.js",
     "lint": "eslint .",
-    "tidy": "tidy -q -e ./public/*.html",
     "hadolint": "hadolint Dockerfile"
   },
   "repository": {
