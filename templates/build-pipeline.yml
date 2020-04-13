@@ -91,6 +91,8 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
+          exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+          echo "Install packages for Kops Server"
           apt update -y
           apt upgrade -y
           apt install python3 -y
@@ -131,6 +133,8 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
+          exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+          echo "Install packages for Jenkins Server"
           apt update -y
           # apt upgrade -y 
           # apt install default-jdk -y
