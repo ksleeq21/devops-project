@@ -64,7 +64,7 @@ Cloudformation stacks of EKS cluster and nodegroup
 
 ## Deployment
 
-Jenkins pipeline provides Blue-Green Deployment. When a pipeline is kicked in Jenkins runs `./scripts/deploy-for-production.sh` with some parameters to begin Blue-Green Deployment.
+Jenkins pipeline manages Blue-Green Deployment. When a pipeline is kicked in Jenkins runs `./scripts/deploy-for-production.sh` with some parameters to begin Blue-Green Deployment.
 
 Parameters of `deploy-for-production.sh`
 - DEPLOYMENT_NAME: Name of deployment 

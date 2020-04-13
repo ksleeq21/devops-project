@@ -107,6 +107,7 @@ Resources:
           # Install eksctl
           curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
           mv /tmp/eksctl /usr/local/bin
+          # Set AWS credentials
 
   JenkinsServer: 
     Type: AWS::EC2::Instance
@@ -160,15 +161,14 @@ Resources:
           # # usermod -a -G docker jenkins
           # # systemctl restart jenkins
           
-
 Outputs:
 
-  KopsPrivateDNS: 
+  KopsPublicDNS: 
     Description: The private host name of Kops server
     Value:
-      !GetAtt KopsServer.PrivateDnsName
+      !GetAtt KopsServer.PublicDnsName
     Export:
-      Name: KopsServerPrivateDNS
+      Name: KopsServerPublicDNS
 
   JenkinsPublicDNS: 
     Description: The public host name of Jenkins server
