@@ -6,7 +6,7 @@
 
 ## Set up Jenkins Server & Kops Server
 
-Run a script `./scripts/create.sh` to provision Jenkins server and Kops server via Cloudformation. The script submits a template to Cloudformation with parameters to create a Jenkins server and a Kops server. During boostrap EC2 UserData scripts install necessary libraries and frameworks for Jeknins pipeline operations, Kubenetes, and EKS Cluster.
+Run a script `create.sh` to provision Jenkins server and Kops server via Cloudformation. The script submits a template to Cloudformation with parameters to create a Jenkins server and a Kops server. During boostrap EC2 UserData scripts install necessary libraries and frameworks for Jeknins pipeline operations, Kubenetes, and EKS Cluster.
 
 ```
 cd templates
