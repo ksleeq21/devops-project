@@ -30,17 +30,17 @@ Post-configuration for Kops
 
 ## Set up EKS cluster and nodegroup
 
-To create EKS cluster and nodegroup, login to Kops server and run eksctl commands. This will create Cloudformation stacks `eksctl-devops-cluster` and `eksctl-devops-nodegroup-standard-workers`.
+To create EKS Cluster and Nodegroup, log into Kops server and run following eksctl commands. This will create Cloudformation stacks `eksctl-prod-cluster` and `eksctl-prod-nodegroup-standard-workers`.
 
-Command for EKS Cluster
+Command to create EKS Cluster
 ```
 eksctl create cluster \
- --name devops \
+ --name prod \
  --region us-west-2 \
  --without-nodegroup
 ```
 
-Command for EKS nodegroup
+Command to create EKS Nodegroup
 ```
 eksctl create nodegroup \
 --cluster devops \
@@ -55,7 +55,21 @@ eksctl create nodegroup \
 --managed
 ```
 
-Cloudformation stacks of EKS cluster and nodegroup
+To delete EKS Cluster and Nodegroup, log into Kops server and run following eksctl commands. This will delete Cloudformation stacks `eksctl-devops-cluster` and `eksctl-devops-nodegroup-standard-workers`.
+
+If a LoadBalancer was created by `service.yaml`, remove service before deleting a Nodegroup. Otherwise it prevents Cluster from getting deleted.
+
+Command to delete EKS Nodegroup
+```
+eksctl delete nodegroup --cluster devops --name standard-workers
+```
+
+Command to delete EKS Cluster
+```
+eksctl delete cluster --name devops
+```
+
+Cloudformation stacks of EKS Cluster and Nodegroup created by eksctl commands:
 
 <img src="./screenshots/cfn-eks-stacks.png" alt="EKS stacks" width="250" height="270"/>
 
