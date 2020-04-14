@@ -2,8 +2,6 @@
 
 *Capstone project for Udacity DevOps Nanodegree program*
 
-This project provide a simple web page. 
-
 --- 
 
 ## Set up Jenkins Server & Kops Server
